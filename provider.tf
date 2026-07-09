@@ -4,13 +4,15 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0"
+      version = "4.74.0"
     }
   }
 
   # 원격 백엔드 사용 시 partial config로 채움 (init -backend-config=...)
   # 현재 state에는 아무 리소스도 없는 상태 -> 신규 node pool만 생성/추적됨
-  backend "azurerm" {}
+  backend "local" {
+    path = "state/terraform.tfstate"
+  }
 }
 
 provider "azurerm" {

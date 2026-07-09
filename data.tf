@@ -15,12 +15,13 @@ locals {
 data "azurerm_resource_group" "rg" {
   for_each = local.resource_group_names
 
-  name = each.value
+  name = each.key
 }
 
 data "azurerm_kubernetes_cluster" "aks" {
-  for_each = { for c in local.aks_cluster_keys : c => c }
+  for_each = local.aks_cluster_keys
 
-  name                = split("|", each.value)[1]
-  resource_group_name = split("|", each.value)[0]
+  name                = split("|", each.key)[1]
+  resource_group_name = split("|", each.key)[0]
 }
+

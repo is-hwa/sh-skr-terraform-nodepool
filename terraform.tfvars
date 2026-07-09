@@ -10,6 +10,11 @@ node_pools = {
     vm_size             = "Standard_B2s" # 2 vCPU, 4GB - 테스트용 저가 SKU
     node_count          = 1
     enable_auto_scaling = false
+    #---use auto scaling---
+    # node_count          = 1
+    # enable_auto_scaling = true
+    # min_count           = 1
+    # max_count           = 3
 
     os_disk_size_gb = 30 
     os_type         = "Linux"
