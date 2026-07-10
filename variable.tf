@@ -24,5 +24,9 @@ variable "node_pools" {
     node_labels = optional(map(string), {})
     node_taints = optional(list(string), [])
     tags        = optional(map(string), {})
+
+    max_surge = optional(string, "10%")
+    drain_timeout_in_minutes = optional(number, 0)
+    node_soak_duration_in_minutes = optional(number, 0)
   }))
 }

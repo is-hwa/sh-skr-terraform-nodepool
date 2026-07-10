@@ -8,7 +8,7 @@ node_pools = {
     aks_cluster_name    = "testtest"  # 실제 AKS 클러스터명으로 교체
 
     vm_size             = "Standard_B2s" # 2 vCPU, 4GB - 테스트용 저가 SKU
-    node_count          = 1
+    node_count          = 2
     enable_auto_scaling = false
     #---use auto scaling---
     # node_count          = 1
