@@ -25,8 +25,31 @@ variable "node_pools" {
     node_taints = optional(list(string), [])
     tags        = optional(map(string), {})
 
-    max_surge = optional(string, "10%")
-    drain_timeout_in_minutes = optional(number, 0)
+    # AKS가 자동으로 채우는 기본값과 동일하게 명시 -> plan에서 불필요한 diff 방지
+    max_surge                     = optional(string, "10%")
+    drain_timeout_in_minutes      = optional(number, 0)
     node_soak_duration_in_minutes = optional(number, 0)
   }))
+
+  validation {
+    condition = alltrue([
+      for np in var.node_pools :
+      np.enable_auto_scaling == false || (
+        np.min_count != null &&
+        np.max_count != null &&
+        np.min_count <= np.max_count
+      )
+    ])
+    error_message = "enable_auto_scaling=true 인 노드풀은 min_count/max_count 를 지정해야 하며 min_count <= max_count 여야 합니다."
+  }
+
+  # node pool name rule
+  validation {
+    condition = alltrue([
+      for k in keys(var.node_pools) :
+      can(regex("^[a-z][a-z0-9]{0,11}$", k))
+    ])
+    error_message = "노드풀 이름은 소문자로 시작하고 영소문자+숫자 12자 이내여야 합니다 (Linux 기준)."
+  }
 }
+
