@@ -30,7 +30,6 @@ variable "node_pools" {
     drain_timeout_in_minutes      = optional(number, 0)
     node_soak_duration_in_minutes = optional(number, 0)
   }))
-
   validation {
     condition = alltrue([
       for np in var.node_pools :
